@@ -71,8 +71,26 @@ Person.prototype.toString = function () {
         + The `drive` method should return a string "I ran out of fuel at x miles!" x being `odometer`.
 */
 
-function Car() {
-
+function Car(model, milesPerGallon) {
+  this.model = model;
+  this.milesPerGallon = milesPerGallon;
+  this.tank = 0;
+  this.odometer = 0;
+}
+Car.prototype.fill = function (gallons) {
+  this.tank = this.tank + gallons;
+}
+Car.prototype.drive = function (distance) {
+  let milesInTank = this.tank * this.milesPerGallon;
+  if(distance <= milesInTank) {
+    this.odometer = this.odometer + distance;
+    this.tank = this.tank - (distance / this.milesPerGallon);
+  } else {
+    this.tank = 0;
+    this.odometer = this.odometer + milesInTank;
+    return `I ran out of fuel at ${this.odometer} miles!`;
+  }
+  
 }
 
 /*
